@@ -13,3 +13,4 @@ print (food)
 print(food2)
 
 print(food[0:3])
+print(food[:2])
