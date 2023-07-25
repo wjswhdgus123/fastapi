@@ -1,15 +1,14 @@
 # Base image
-FROM python:3.8-slim
-
+FROM python:3.9
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /code
 
 # Copy the FastAPI app file to the container's working directory
-COPY main.py .
 
+COPY ./requirements.txt /code/requirements.txt
 # Install required dependencies
-RUN pip install fastapi uvicorn
-
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+COPY ./app /code/app
 # Expose the port that FastAPI will be running on
 EXPOSE 80
 
