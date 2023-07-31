@@ -8,6 +8,8 @@ WORKDIR /inventory
 COPY ./requirements.txt /inventory/requirements.txt
 # Install required dependencies
 RUN pip install --no-cache-dir --upgrade -r /inventory/requirements.txt
+RUN  python3 -m inventory.app.portcheck
+RUN  python3 -m inventory.app.sshcomm
 COPY app ./
 # Expose the port that FastAPI will be running on
 EXPOSE 80
