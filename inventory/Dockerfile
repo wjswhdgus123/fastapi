@@ -1,14 +1,14 @@
 # Base image
 FROM python:3.9
 # Set the working directory inside the container
-WORKDIR /code
+WORKDIR /inventory
 
 # Copy the FastAPI app file to the container's working directory
 
-COPY ./requirements.txt /code/requirements.txt
+COPY ./requirements.txt /inventory/requirements.txt
 # Install required dependencies
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-COPY ./app /code/app
+RUN pip install --no-cache-dir --upgrade -r /inventory/requirements.txt
+COPY ./app /inventory/app
 # Expose the port that FastAPI will be running on
 EXPOSE 80
 
