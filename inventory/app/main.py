@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from portcheck import is_port_open 
-from sshcomm import execute_ssh_command
+from .portcheck import is_port_open 
+from .sshcomm import execute_ssh_command
 
 app = FastAPI()
 
