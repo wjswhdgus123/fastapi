@@ -8,9 +8,9 @@ WORKDIR /inventory
 COPY ./requirements.txt /inventory/requirements.txt
 # Install required dependencies
 RUN pip install --no-cache-dir --upgrade -r /inventory/requirements.txt
-COPY ./app /inventory/app
+COPY app ./
 # Expose the port that FastAPI will be running on
 EXPOSE 80
 
 # Command to start the FastAPI server using Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
