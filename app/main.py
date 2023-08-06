@@ -1,20 +1,24 @@
 from fastapi import FastAPI
-import socket
+import uvicorn
+import paramiko
 
 app = FastAPI()
 
-def is_port_open(ip: str, port: int) -> bool:
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(1)  # Timeout 설정 (초 단위)
-            s.connect((ip, port))
-        return True
-    except:
-        return False
+@app.get("/server")
+async def serverinfo(ip: str,username: str, pw: str, command: str  ):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+    ssh.connect(ip , username=username , password=pw )
+    stdin, stdout, stderr = ssh.exec_command(command)
+    result = stdout.read().decode()
 
-@app.get("/check_port/")
-def check_port(ip: str, port: int):
-    if is_port_open(ip, port):
-        return {"message": f"Port {port} is open on {ip}"}
-    else:
-        return {"message": f"Port {port} is not open on {ip}"}
+    # 실행 결과 출력
+    print("=== Command Output ===")
+    print(stdout.read().decode())
+    
+
+    return result
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
